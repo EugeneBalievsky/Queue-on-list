@@ -2,68 +2,71 @@
 
 #include "Queue.h"
 
-Queue* create_queue(int value, Queue* next, Queue* prev) {
-	Queue* q = new Queue;
-	q->value = value;
-	q->next = next;
-	q->prev = prev;
-	return q;
+Node* create_node(int value, Node* next, Node* prev) {
+	Node* ptr = new Node;
+	ptr->value = value;
+	ptr->next = next;
+	ptr->prev = prev;
+	return ptr;
 } 
 
+Queue* create_queue(Node* ptr) {
+	Queue* q = new Queue;
+	q->head = ptr;
+	q->tail = ptr;
+	return q;
+}
+
 bool isEmpty(Queue* q) {
-	if (!q)
+	if (q->tail == q->head && q->head == nullptr) 
 		return 1;
 	else
 		return 0;
 }
-
-void print(Queue* head) {
-	if (isEmpty(head))
+void print(Queue* q) {
+	if (isEmpty(q)) {
 		std::cout << "Queue is empty!" << std::endl;
-	for (Queue* it = head; it != nullptr; it = it->next) {
+		return;
+	}
+	for (Node* it = q->head; it != nullptr; it=it->next) {
 		std::cout << it->value << ' ';
 	}
 	std::cout << '\n';
 }
-
-void push(Queue*& head, int value) {
-	Queue* ptr = create_queue(value);
-	if (isEmpty(head)) {
-		head = ptr;
+void push(Queue*& q, int value) {
+	Node* ptr = create_node(value);
+    	if (isEmpty(q)) {
+		q->head = ptr;
 		return;
 	}
 	else {
-		Queue* it = head;
-		for (it; it->next != nullptr; it = it->next);
+		Node* it = q->tail;
 		it->next = ptr;
 		ptr->prev = it;
-		
+		ptr->next = nullptr;
+		q->tail = ptr;
+
 	}
 }
-void del_first(Queue*& head) {
-	if (isEmpty(head)) {
+void pop(Queue*& q) {
+	if (isEmpty(q)) {
 		std::cout << "Queue is empty";
+		return;
 	}
 	else {
-		Queue* it = head;
-		head = head->next;
-		it = head->prev;
-		head->prev = nullptr;
+		Node* it = q->head;
+		q->head = q->head->next;
+		it = q->head->prev;
+		q->head->prev = nullptr;
 		delete it;
 	}
 }
-Queue* find_first(Queue* head) {
-	if (isEmpty(head)) {
+int get_front(Queue* q) {
+	if (isEmpty(q)) {
 		std::cout << "Queue is empty";
-		return nullptr;
+		return 0;
 	}
 	else {
-		Queue* it = head;
-		head = head->next;
-		it = head->prev;
-		 
-
-		 return it;
+		return q->head->value;
 	}
 }
-

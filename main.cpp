@@ -3,21 +3,25 @@
 
 
 int main() {
-	Queue* qu;
+	Node* l = create_node(4, nullptr, nullptr);
+	Queue* qu = create_queue(l);
 	
+	print(qu);
 
-	qu = create_queue(4, nullptr, nullptr);
-	
-	for (int i = 1; i < 18; ++i)
-	    push(qu, i);
+	push(qu, 5);
+	push(qu, 6);
+	push(qu, 212);
 
 	print(qu);
 
-	for (int i = 0; i < 9; ++i)
-	    del_first(qu);
-	print(qu);
+	pop(qu);
+	pop(qu);
 	
-	Queue * f = find_first(qu);
-	print(f);
+
+	print(qu);
+
+	std::cout<< get_front(qu);
+
+	
 	return 0;
 }

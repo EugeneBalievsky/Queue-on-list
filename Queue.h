@@ -1,19 +1,24 @@
 #ifndef _QUEUE_H
 #define _QUEUE_H
 
-
-struct Queue {
+struct Node {
 	int value;
-	Queue* next;
-	Queue* prev;
+	Node* next;
+	Node* prev;
 };
 
-Queue* create_queue(int value, Queue* next = nullptr, Queue* prev = nullptr);
+struct Queue {
+	Node* head;
+	Node* tail;
+};
+
+Node* create_node(int value, Node* next = nullptr, Node* prev = nullptr);
+Queue* create_queue(Node* head);
 bool isEmpty(Queue* q);
-void print(Queue* head);
-void push(Queue*& head, int value);
-void del_first(Queue*& q);
-Queue* find_first(Queue* head);
+void print(Queue* q);
+void push(Queue*& q, int value);
+void pop(Queue*& q);
+int get_front(Queue* q);
 
 #endif
 
